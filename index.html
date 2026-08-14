@@ -1051,7 +1051,12 @@ const MODULES=[['m1','Dasar Excel','Istilah, alamat sel, dan cara Excel berpikir
 ['m4','Fungsi Logika','IF, AND, OR, dan IF bertingkat untuk keputusan otomatis.'],
 ['m5','VLOOKUP & Lookup','Skill favorit tes kerja: cari data antar tabel + IFERROR.'],
 ['m6','Analisis Data','Sort, Filter, COUNTIF/SUMIF, Pivot Table, dan grafik.']];
-$('#modGrid').innerHTML=MODULES.map((m,i)=>'<div class="card mod-card rv"><div class="num">0'+(i+1)+'</div><span class="tag" id="tag-'+m[0]+'">Belum mulai</span><h3>'+m[1]+'</h3><p>'+m[2]+'</p><div class="row"><button class="btn btn-primary" data-page="'+m[0]+'" style="padding:8px 16px;font-size:.85rem">Buka Modul →</button></div></div>').join('');
+
+function initModGrid(){
+  if($('#modGrid')){
+    $('#modGrid').innerHTML=MODULES.map((m,i)=>'<div class="card mod-card rv"><div class="num">0'+(i+1)+'</div><span class="tag" id="tag-'+m[0]+'">Belum mulai</span><h3>'+m[1]+'</h3><p>'+m[2]+'</p><div class="row"><button class="btn btn-primary" data-page="'+m[0]+'" style="padding:8px 16px;font-size:.85rem">Buka Modul →</button></div></div>').join('');
+  }
+}
 function refreshTicks(){
   MODULES.forEach(m=>{
     const t=document.getElementById('tick-'+m[0]);if(t)t.textContent=prog.modules[m[0]]?'✔':'';
@@ -1085,6 +1090,7 @@ $$('.done-btn').forEach(b=>b.addEventListener('click',()=>{
 }));
 
 /* ================= INIT ================= */
+initModGrid();
 Object.keys(QUIZZES).forEach(renderQuiz);
 loadScenario('siswa');
 refreshDashboard();
