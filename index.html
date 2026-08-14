@@ -248,7 +248,6 @@ kbd{font-family:'IBM Plex Mono';background:#fff;border:1px solid #C9D6C7;border-
 
   <h2 class="rv"><span class="bar"></span> Peta belajar</h2>
   <div class="grid2" id="modGrid"></div>
-
   <div class="tip rv" style="margin-top:26px"><b>Cara pakai:</b> baca modul → praktikkan rumusnya di <b>Simulator</b> → kerjakan kuis di akhir modul → tutup dengan <b>Ujian Akhir</b>. Tombol di bawah tiap modul menandai progresmu.</div>
 </section>
 
@@ -638,6 +637,10 @@ try{
   const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.06});
   $$('.rv').forEach(el=>io.observe(el));
 }catch(e){$$('.rv').forEach(el=>el.classList.add('in'));}
+
+/* ================= INIT MODGRID ================= */
+initModGrid();
+refreshTicks();
 
 /* ================= HERO DEMO ================= */
 (function(){
@@ -1090,7 +1093,6 @@ $$('.done-btn').forEach(b=>b.addEventListener('click',()=>{
 }));
 
 /* ================= INIT ================= */
-initModGrid();
 Object.keys(QUIZZES).forEach(renderQuiz);
 loadScenario('siswa');
 refreshDashboard();
