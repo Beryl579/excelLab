@@ -1,16 +1,5 @@
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
+(index.html is a source file, so no need to add anything to .gitignore)
 
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
+```gitignore
 
-# Logs
-*.log
-
-# Temp
-excellab/
+```
