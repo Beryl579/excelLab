@@ -161,6 +161,8 @@ kbd{font-family:'IBM Plex Mono';background:#fff;border:1px solid #C9D6C7;border-
 .cell.err{color:var(--red);font-weight:600}
 .cell input{width:100%;border:0;outline:0;font:inherit;background:transparent}
 .sim-hint{background:#fff;border:1px dashed var(--green);border-radius:10px;padding:12px 16px;margin-top:14px;font-size:.92rem;color:var(--green2)}
+.sim-scroll-hint{display:none;margin:6px 0 0;font-size:.78rem;color:var(--mut)}
+@media(max-width:640px){.sim-scroll-hint{display:block}}
 
 /* ===== QUIZ ===== */
 .quiz{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-top:26px}
