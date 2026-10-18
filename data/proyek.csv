@@ -1,11 +1,11 @@
-Task,PIC,Deadline,Status,Persen,Bobot
-Analisis Kebutuhan,Andi,2024-02-10,Selesai,100,15
-Desain UI,Beryl,2024-02-20,Selesai,100,20
-Backend API,Citra,2024-03-05,Proses,70,25
-Database,Dimas,2024-03-12,Proses,60,15
-Testing,Eka,2024-03-20,Belum,20,15
-Dokumentasi,Fajar,2024-03-25,Belum,10,5
-Deployment,Gita,2024-03-30,Belum,0,10
-UAT,Hadi,2024-04-05,Belum,0,5
-Training,Indah,2024-04-10,Belum,0,3
-Go-Live,Joko,2024-04-15,Belum,0,2
+﻿Task;PIC;Deadline;Status;Persen;Bobot
+Analisis Kebutuhan;Andi;2024-02-10;Selesai;100;15
+Desain UI;Beryl;2024-02-20;Selesai;100;20
+Backend API;Citra;2024-03-05;Proses;70;25
+Database;Dimas;2024-03-12;Proses;60;15
+Testing;Eka;2024-03-20;Belum;20;15
+Dokumentasi;Fajar;2024-03-25;Belum;10;5
+Deployment;Gita;2024-03-30;Belum;0;10
+UAT;Hadi;2024-04-05;Belum;0;5
+Training;Indah;2024-04-10;Belum;0;3
+Go-Live;Joko;2024-04-15;Belum;0;2

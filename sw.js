@@ -11,7 +11,17 @@ const ASSETS = [
   './data/penjualan.csv',
   './data/gudang.csv',
   './data/nilai-siswa.csv',
-  './data/absensi.csv'
+  './data/absensi.csv',
+  './data/keuangan-warung.csv',
+  './data/pelanggan.csv',
+  './data/proyek.csv',
+  './data/penjualan.xlsx',
+  './data/gudang.xlsx',
+  './data/nilai-siswa.xlsx',
+  './data/absensi.xlsx',
+  './data/keuangan-warung.xlsx',
+  './data/pelanggan.xlsx',
+  './data/proyek.xlsx'
 ];
 
 self.addEventListener('install', e => {

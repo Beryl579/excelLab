@@ -707,7 +707,7 @@
   <h1 style="font-size:2.1rem">Contoh Data &amp; Kasus Penerapan Rumus</h1>
   <p class="lead">Dataset siap pakai + tutorial langkah demi langkah. Unduh CSV, import ke Simulator, lalu praktikkan rumus yang relevan.</p>
 
-  <div class="tip rv"><b>Cara pakai:</b> 1) Unduh file CSV di bawah. 2) Buka halaman <b>Simulator Rumus</b>. 3) Klik <b>⬆️ Import CSV</b> dan pilih file. 4) Ikuti langkah tutorial di card masing-masing. 5) Coba ubah angka sumber — semua rumus ikut terhitung ulang.</div>
+  <div class="tip rv"><b>Cara pakai:</b> Mau buka di <b>Excel</b>? Unduh versi <b>.xlsx</b> (sudah rapi: header, format Rupiah/tanggal/persen, lebar kolom). Mau latihan di <b>Simulator</b>? Unduh <b>CSV</b> → buka halaman <b>Simulator Rumus</b> → klik <b>⬆️ Import CSV</b> → ikuti langkah tutorial di card masing-masing. Ganti angka sumber mana pun, semua rumus ikut terhitung ulang.</div>
 
   <div class="grid2" style="margin-top:18px">
 
@@ -723,7 +723,8 @@
         <tr><td>Lookup</td><td><code>=VLOOKUP("Laptop",B2:F12,5,FALSE)</code> — cari harga (butuh kunci di kolom pertama)</td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/penjualan.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/penjualan.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/penjualan.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa total penjualan kategori Elektronik?" → gunakan SUMIF. "Produk apa yang paling banyak terjual?" → coba SUMIFS + MAX.</div>
@@ -741,7 +742,8 @@
         <tr><td>Min stok</td><td><code>=MIN(F2:F12)</code> — stok paling sedikit</td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/gudang.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/gudang.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/gudang.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Barang mana yang harus restock (sisa ≤ 5)?" → tambahkan kolom Status dengan IF, lalu hitung dengan COUNTIF.</div>
@@ -759,7 +761,8 @@
         <tr><td>Jumlah lulus</td><td><code>=COUNTIF(D2:D12,"LULUS")</code></td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/nilai-siswa.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/nilai-siswa.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/nilai-siswa.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa rata-rata nilai kelas dan berapa yang remedial?" → AVERAGE + COUNTIF.</div>
@@ -777,7 +780,8 @@
         <tr><td>Jumlah SP</td><td><code>=COUNTIF(E2:E12,"SP")</code></td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/absensi.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/absensi.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/absensi.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Siapa karyawan dengan masa kerja ≥ 5 tahun dan telat &gt; 3 hari?" → AND + IF.</div>
@@ -796,7 +800,8 @@
         <tr><td>Bulan terbaik</td><td><code>=MAX(E2:E12)</code> + <code>=INDEX(A2:A12,MATCH(MAX(E2:E12),E2:E12,0))</code></td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/keuangan-warung.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/keuangan-warung.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/keuangan-warung.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Bulan mana laba tertinggi dan berapa margin-nya?" → MAX + INDEX-MATCH.</div>
@@ -815,7 +820,8 @@
         <tr><td>Cari nama by ID</td><td><code>=VLOOKUP("C005",A2:F12,2,FALSE)</code></td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/pelanggan.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/pelanggan.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/pelanggan.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa total belanja pelanggan VIP di Medan?" → SUMIFS.</div>
@@ -834,7 +840,8 @@
         <tr><td>Bobot sisa</td><td><code>=SUMIF(D2:D11,"Belum",F2:F11)</code></td></tr>
       </table></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="data/proyek.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <a class="btn btn-primary" href="data/proyek.xlsx" download style="padding:8px 14px;font-size:.85rem">🧾 Unduh Excel (.xlsx)</a>
+        <a class="btn btn-ghost" href="data/proyek.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ CSV (untuk Simulator)</a>
         <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
       </div>
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa % progress proyek secara keseluruhan dan berapa bobot task yang belum dimulai?"</div>

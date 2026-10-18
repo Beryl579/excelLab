@@ -723,7 +723,7 @@ if (btnExport) {
   });
 }
 
-function parseCSVLine(line) {
+function parseCSVLine(line, delim = ',') {
   const out = []; let cur = '', inQ = false;
   for (let i = 0; i < line.length; i++) {
     const ch = line[i];
@@ -732,12 +732,22 @@ function parseCSVLine(line) {
       else cur += ch;
     } else {
       if (ch === '"') inQ = true;
-      else if (ch === ',') { out.push(cur); cur = ''; }
+      else if (ch === delim) { out.push(cur); cur = ''; }
       else cur += ch;
     }
   }
   out.push(cur);
   return out;
+}
+
+// Deteksi pemisah kolom: ';' (file Excel Indonesia) atau ',' (CSV standar).
+function detectCSVDelim(text) {
+  const first = (text.split(/\r?\n/).find(l => l.trim()) || '');
+  const sc = first.indexOf(';'), cm = first.indexOf(',');
+  if (sc !== -1 && (cm === -1 || sc < cm)) return ';';
+  if (cm !== -1) return ',';
+  if (sc !== -1) return ';';
+  return ',';
 }
 
 const fileImport = $('#fileImport');
@@ -748,9 +758,11 @@ if (fileImport) {
     const reader = new FileReader();
     reader.onload = () => {
       grid = {};
-      String(reader.result).split(/\r?\n/).forEach((line, ri) => {
+      const text = String(reader.result).replace(/^\uFEFF/, '');
+      const delim = detectCSVDelim(text);
+      text.split(/\r?\n/).forEach((line, ri) => {
         if (!line.trim()) return;
-        const row = parseCSVLine(line);
+        const row = parseCSVLine(line, delim);
         const r = ri + 1;
         COLS.forEach((c, ci) => {
           const val = row[ci];
