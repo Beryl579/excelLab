@@ -188,31 +188,43 @@ try {
 (function() {
   const fx = $('#demoFx'), res = $('#demoRes');
   if (!fx) return;
-  const F = '=SUM(B2:B5)';
-  let i = 0, step = 0;
+  const demos = [
+    { f: '=SUM(B2:B5)', r: '315' },
+    { f: '=AVERAGE(B2:B5)', r: '78,75' },
+    { f: '=MAX(B2:B5)', r: '92' },
+    { f: '=MIN(B2:B5)', r: '68' },
+    { f: '=COUNTIF(B2:B5,">=75")', r: '3' },
+    { f: '=IF(B2>=75,"LULUS","REMED")', r: 'LULUS' },
+    { f: '=SUMIF(A2:A5,"Beryl",B2:B5)', r: '92' },
+    { f: '=ROUND(AVERAGE(B2:B5),0)', r: '79' }
+  ];
+  let di = 0, i = 0, step = 0;
   function loop() {
+    const d = demos[di];
     if (step === 0) {
       i++;
-      fx.textContent = F.slice(0, i);
+      fx.textContent = d.f.slice(0, i);
       res.innerHTML = '&nbsp;';
       res.classList.remove('flash');
-      if (i >= F.length) {
+      if (i >= d.f.length) {
         step = 1;
         setTimeout(loop, 650);
         return;
       }
-      setTimeout(loop, 80);
+      setTimeout(loop, 70);
     } else if (step === 1) {
-      res.textContent = '315';
+      res.textContent = d.r;
       res.classList.add('flash');
       step = 2;
-      setTimeout(loop, 2300);
+      setTimeout(loop, 2400);
     } else {
       fx.textContent = '';
       res.innerHTML = '&nbsp;';
+      res.classList.remove('flash');
       i = 0;
       step = 0;
-      setTimeout(loop, 450);
+      di = (di + 1) % demos.length;
+      setTimeout(loop, 400);
     }
   }
   loop();
