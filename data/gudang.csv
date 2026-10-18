@@ -1,0 +1,12 @@
+Kode,Nama,StokAwal,Masuk,Keluar,Sisa
+B001,Laptop,10,5,8,=C2+D2-E2
+B002,Printer,15,3,12,=C3+D3-E3
+B003,Monitor,8,4,5,=C4+D4-E4
+B004,Mouse,50,20,35,=C5+D5-E5
+B005,Keyboard,30,10,25,=C6+D6-E6
+B006,Headset,12,6,9,=C7+D7-E7
+B007,Webcam,7,4,6,=C8+D8-E8
+B008,Speaker,9,3,5,=C9+D9-E9
+B009,Kabel HDMI,40,15,30,=C10+D10-E10
+B010,Flashdisk,25,10,18,=C11+D11-E11
+B011,SSD,6,4,5,=C12+D12-E12

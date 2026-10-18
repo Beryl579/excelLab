@@ -1,0 +1,12 @@
+Nama,Nilai,Grade,Status
+Andi,88,=IF(B2>=85,"A",IF(B2>=75,"B",IF(B2>=60,"C","D"))),=IF(B2>=75,"LULUS","REMED")
+Beryl,92,=IF(B3>=85,"A",IF(B3>=75,"B",IF(B3>=60,"C","D"))),=IF(B3>=75,"LULUS","REMED")
+Citra,68,=IF(B4>=85,"A",IF(B4>=75,"B",IF(B4>=60,"C","D"))),=IF(B4>=75,"LULUS","REMED")
+Dimas,75,=IF(B5>=85,"A",IF(B5>=75,"B",IF(B5>=60,"C","D"))),=IF(B5>=75,"LULUS","REMED")
+Eka,59,=IF(B6>=85,"A",IF(B6>=75,"B",IF(B6>=60,"C","D"))),=IF(B6>=75,"LULUS","REMED")
+Fajar,81,=IF(B7>=85,"A",IF(B7>=75,"B",IF(B7>=60,"C","D"))),=IF(B7>=75,"LULUS","REMED")
+Gita,73,=IF(B8>=85,"A",IF(B8>=75,"B",IF(B8>=60,"C","D"))),=IF(B8>=75,"LULUS","REMED")
+Hadi,90,=IF(B9>=85,"A",IF(B9>=75,"B",IF(B9>=60,"C","D"))),=IF(B9>=75,"LULUS","REMED")
+Indah,64,=IF(B10>=85,"A",IF(B10>=75,"B",IF(B10>=60,"C","D"))),=IF(B10>=75,"LULUS","REMED")
+Joko,77,=IF(B11>=85,"A",IF(B11>=75,"B",IF(B11>=60,"C","D"))),=IF(B11>=75,"LULUS","REMED")
+Kiki,85,=IF(B12>=85,"A",IF(B12>=75,"B",IF(B12>=60,"C","D"))),=IF(B12>=75,"LULUS","REMED")

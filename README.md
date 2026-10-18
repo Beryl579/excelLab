@@ -13,6 +13,7 @@ tutor AI (ExcelMate).
 ├── style.css       # Styling
 ├── script.js       # Logika: navigasi, simulator, kuis, pivot, chat
 ├── data.js         # Data kuis / video / referensi
+├── data/           # Contoh dataset CSV untuk latihan
 ├── .env            # Rahasia API (TIDAK di-commit)
 ├── .env.example    # Template variabel lingkungan
 └── README.md

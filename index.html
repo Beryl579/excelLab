@@ -37,6 +37,7 @@
     <button class="nav-item" data-page="shortcut">⌨️ Shortcut &amp; Trainer</button>
     <button class="nav-item" data-page="ref">📖 Referensi Rumus</button>
     <button class="nav-item" data-page="cheatsheet">🖨️ Cheat Sheet Cetak</button>
+<button class="nav-item" data-page="data">📂 Contoh Data &amp; Kasus</button>
     <div class="nav-group">Media &amp; Bantuan</div>
     <button class="nav-item" data-page="video">🎬 Video Belajar</button>
     <button class="nav-item" data-page="chat">🤖 Tutor AI Excel</button>
@@ -694,6 +695,111 @@
     <div class="tk" id="trKey">—</div>
     <div id="trOpts"></div>
     <div class="streak">Streak: <b id="trStreak">0</b> · Skor total: <b id="trScore">0</b></div>
+  </div>
+</section>
+
+<!-- ================= CONTOH DATA & KASUS ================= -->
+<section class="page" id="page-data">
+  <span class="chip">📂 Data Nyata · Tutorial Langkah demi Langkah</span>
+  <h1 style="font-size:2.1rem">Contoh Data &amp; Kasus Penerapan Rumus</h1>
+  <p class="lead">Dataset siap pakai + tutorial langkah demi langkah. Unduh CSV, import ke Simulator, lalu praktikkan rumus yang relevan.</p>
+
+  <div class="tip rv"><b>Cara pakai:</b> 1) Unduh file CSV di bawah. 2) Buka halaman <b>Simulator Rumus</b>. 3) Klik <b>⬆️ Import CSV</b> dan pilih file. 4) Ikuti langkah tutorial di card masing-masing. 5) Coba ubah angka sumber — semua rumus ikut terhitung ulang.</div>
+
+  <div class="grid2" style="margin-top:18px">
+
+    <!-- Penjualan -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🛒 Data Penjualan Toko</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">11 transaksi: Tanggal, Produk, Kategori, Qty, Harga, Total. Kolom Total berisi rumus <span class="f">=Qty*Harga</span>.</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>Total (F)</td><td><code>=D2*E2</code> — perkalian dasar</td></tr>
+        <tr><td>Rekap</td><td><code>=SUMIF(C2:C12,"Elektronik",F2:F12)</code> — total penjualan per kategori</td></tr>
+        <tr><td>Hitung</td><td><code>=COUNTIF(C2:C12,"ATK")</code> — jumlah transaksi ATK</td></tr>
+        <tr><td>Lookup</td><td><code>=VLOOKUP("Laptop",B2:F12,5,FALSE)</code> — cari harga (butuh kunci di kolom pertama)</td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/penjualan.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa total penjualan kategori Elektronik?" → gunakan SUMIF. "Produk apa yang paling banyak terjual?" → coba SUMIFS + MAX.</div>
+    </div>
+
+    <!-- Gudang -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🏭 Data Stok Gudang</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">11 barang: Kode, Nama, StokAwal, Masuk, Keluar, Sisa. Kolom Sisa berisi <span class="f">=Awal+Masuk-Keluar</span>.</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>Sisa (F)</td><td><code>=C2+D2-E2</code> — stok akhir</td></tr>
+        <tr><td>Status</td><td><code>=IF(F2&lt;=5,"RESTOCK","AMAN")</code> — logika stok minimum</td></tr>
+        <tr><td>Total keluar</td><td><code>=SUM(E2:E12)</code> — total barang keluar</td></tr>
+        <tr><td>Min stok</td><td><code>=MIN(F2:F12)</code> — stok paling sedikit</td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/gudang.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Barang mana yang harus restock (sisa ≤ 5)?" → tambahkan kolom Status dengan IF, lalu hitung dengan COUNTIF.</div>
+    </div>
+
+    <!-- Nilai Siswa -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🎓 Data Nilai Siswa</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">11 siswa: Nama, Nilai, Grade, Status. Grade &amp; Status dihitung otomatis dengan IF bertingkat.</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>Grade (C)</td><td><code>=IF(B2&gt;=85,"A",IF(B2&gt;=75,"B",IF(B2&gt;=60,"C","D")))</code></td></tr>
+        <tr><td>Status (D)</td><td><code>=IF(B2&gt;=75,"LULUS","REMED")</code></td></tr>
+        <tr><td>Rata-rata</td><td><code>=AVERAGE(B2:B12)</code></td></tr>
+        <tr><td>Jumlah lulus</td><td><code>=COUNTIF(D2:D12,"LULUS")</code></td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/nilai-siswa.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa rata-rata nilai kelas dan berapa yang remedial?" → AVERAGE + COUNTIF.</div>
+    </div>
+
+    <!-- Absensi HR -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🧑‍💼 Data Absensi &amp; Masa Kerja (HR)</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">11 karyawan: Nama, TglMasuk, LamaKerja(Tahun), TelatHari, Status. Lama kerja dihitung dengan DATEDIF.</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>LamaKerja (C)</td><td><code>=DATEDIF(B2,TODAY(),"Y")</code></td></tr>
+        <tr><td>Status (E)</td><td><code>=IF(D2&gt;3,"SP","OK")</code> — surat peringatan</td></tr>
+        <tr><td>Rata-rata telat</td><td><code>=AVERAGE(D2:D12)</code></td></tr>
+        <tr><td>Jumlah SP</td><td><code>=COUNTIF(E2:E12,"SP")</code></td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/absensi.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Siapa karyawan dengan masa kerja ≥ 5 tahun dan telat &gt; 3 hari?" → AND + IF.</div>
+    </div>
+
+  </div>
+
+  <h2 class="rv" style="margin-top:26px"><span class="bar"></span> Tutorial Mini: Dari Data Mentah ke Laporan</h2>
+  <div class="card rv" style="padding:16px">
+    <ol style="margin:6px 0 10px 22px">
+      <li>Import <b>data/penjualan.csv</b> ke Simulator.</li>
+      <li>Tambahkan di sel <b>G1</b> judul "Total Penjualan" dan di <b>G2</b> rumus <span class="f">=SUM(F2:F12)</span>.</li>
+      <li>Di <b>G3</b> "Penjualan Elektronik" tulis <span class="f">=SUMIF(C2:C12,"Elektronik",F2:F12)</span>.</li>
+      <li>Di <b>G4</b> "Jumlah transaksi ATK" tulis <span class="f">=COUNTIF(C2:C12,"ATK")</span>.</li>
+      <li>Ubah Qty pada baris mana pun — lihat Total dan rekap ikut berubah otomatis.</li>
+    </ol>
+    <div class="tip" style="margin:0">💡 Inilah inti Excel: data rapi + rumus yang referensi ke sumber = laporan hidup yang update otomatis.</div>
+  </div>
+
+  <div class="page-foot">
+    <button class="btn btn-ghost" data-page="sim">🧪 Buka Simulator</button>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-outline" data-page="ref">📖 Referensi Rumus</button>
+      <button class="btn btn-primary" data-page="home">🏠 Dashboard</button>
+    </div>
   </div>
 </section>
 

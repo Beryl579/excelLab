@@ -1,0 +1,12 @@
+Tanggal,Produk,Kategori,Qty,Harga,Total
+2024-01-02,Laptop,Elektronik,2,8000000,=D2*E2
+2024-01-03,Printer,ATK,1,1800000,=D3*E3
+2024-01-04,Laptop,Elektronik,1,8000000,=D4*E4
+2024-01-05,Monitor,Elektronik,2,2500000,=D5*E5
+2024-01-06,Printer,ATK,3,1800000,=D6*E6
+2024-01-07,Laptop,Elektronik,1,8000000,=D7*E7
+2024-01-08,Monitor,Elektronik,1,2500000,=D8*E8
+2024-01-09,Printer,ATK,2,1800000,=D9*E9
+2024-01-10,Laptop,Elektronik,2,8000000,=D10*E10
+2024-01-11,Monitor,Elektronik,1,2500000,=D11*E11
+2024-01-12,Printer,ATK,2,1800000,=D12*E12
