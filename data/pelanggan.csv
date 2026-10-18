@@ -1,0 +1,12 @@
+ID,Nama,Segment,Kota,TotalBelanja,Tier
+C001,Andi,VIP,Medan,8500000,=IF(E2>=5000000,"VIP",IF(E2>=2000000,"Regular","Basic"))
+C002,Beryl,Regular,Jakarta,2300000,=IF(E3>=5000000,"VIP",IF(E3>=2000000,"Regular","Basic"))
+C003,Citra,Basic,Surabaya,450000,=IF(E4>=5000000,"VIP",IF(E4>=2000000,"Regular","Basic"))
+C004,Dimas,Regular,Medan,3100000,=IF(E5>=5000000,"VIP",IF(E5>=2000000,"Regular","Basic"))
+C005,Eka,VIP,Jakarta,12000000,=IF(E6>=5000000,"VIP",IF(E6>=2000000,"Regular","Basic"))
+C006,Fajar,Basic,Bandung,800000,=IF(E7>=5000000,"VIP",IF(E7>=2000000,"Regular","Basic"))
+C007,Gita,Regular,Surabaya,2750000,=IF(E8>=5000000,"VIP",IF(E8>=2000000,"Regular","Basic"))
+C008,Hadi,VIP,Medan,6400000,=IF(E9>=5000000,"VIP",IF(E9>=2000000,"Regular","Basic"))
+C009,Indah,Basic,Jakarta,300000,=IF(E10>=5000000,"VIP",IF(E10>=2000000,"Regular","Basic"))
+C010,Joko,Regular,Bandung,1900000,=IF(E11>=5000000,"VIP",IF(E11>=2000000,"Regular","Basic"))
+C011,Kiki,VIP,Surabaya,9800000,=IF(E12>=5000000,"VIP",IF(E12>=2000000,"Regular","Basic"))

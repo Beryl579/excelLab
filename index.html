@@ -783,6 +783,63 @@
       <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Siapa karyawan dengan masa kerja ≥ 5 tahun dan telat &gt; 3 hari?" → AND + IF.</div>
     </div>
 
+    <!-- Keuangan Warung -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🍜 Data Keuangan Warung (P&amp;L)</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">11 bulan: Pendapatan, Biaya Bahan, Biaya Operasional, Laba, Margin. Laba &amp; Margin dihitung otomatis.</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>Laba (E)</td><td><code>=B2-C2-D2</code> — pendapatan dikurangi biaya</td></tr>
+        <tr><td>Margin (F)</td><td><code>=E2/B2</code> — laba / pendapatan</td></tr>
+        <tr><td>Total laba</td><td><code>=SUM(E2:E12)</code></td></tr>
+        <tr><td>Rata-rata margin</td><td><code>=AVERAGE(F2:F12)</code></td></tr>
+        <tr><td>Bulan terbaik</td><td><code>=MAX(E2:E12)</code> + <code>=INDEX(A2:A12,MATCH(MAX(E2:E12),E2:E12,0))</code></td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/keuangan-warung.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Bulan mana laba tertinggi dan berapa margin-nya?" → MAX + INDEX-MATCH.</div>
+    </div>
+
+    <!-- Pelanggan -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">👥 Data Pelanggan (CRM)</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">11 pelanggan: ID, Nama, Segment, Kota, TotalBelanja, Tier (otomatis dari total belanja).</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>Tier (F)</td><td><code>=IF(E2&gt;=5000000,"VIP",IF(E2&gt;=2000000,"Regular","Basic"))</code></td></tr>
+        <tr><td>Jumlah VIP</td><td><code>=COUNTIF(F2:F12,"VIP")</code></td></tr>
+        <tr><td>Total belanja VIP</td><td><code>=SUMIF(F2:F12,"VIP",E2:E12)</code></td></tr>
+        <tr><td>Pelanggan per kota</td><td><code>=COUNTIF(D2:D12,"Medan")</code></td></tr>
+        <tr><td>Cari nama by ID</td><td><code>=VLOOKUP("C005",A2:F12,2,FALSE)</code></td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/pelanggan.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa total belanja pelanggan VIP di Medan?" → SUMIFS.</div>
+    </div>
+
+    <!-- Proyek -->
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🗂️ Data Proyek &amp; Progress</h3>
+      <p style="font-size:.9rem;color:var(--mut);margin:0 0 10px">10 task: Task, PIC, Deadline, Status, %Selesai, Bobot. Hitung progress tertimbang.</p>
+      <div class="tbl-wrap" style="margin-bottom:10px"><table class="tbl">
+        <tr><th>Kolom</th><th>Contoh rumus yang dilatih</th></tr>
+        <tr><td>Progress tertimbang</td><td><code>=SUMPRODUCT(E2:E11,F2:F11)/SUM(F2:F11)</code></td></tr>
+        <tr><td>Task selesai</td><td><code>=COUNTIF(D2:D11,"Selesai")</code></td></tr>
+        <tr><td>Task belum mulai</td><td><code>=COUNTIF(D2:D11,"Belum")</code></td></tr>
+        <tr><td>Rata-rata %</td><td><code>=AVERAGE(E2:E11)</code></td></tr>
+        <tr><td>Bobot sisa</td><td><code>=SUMIF(D2:D11,"Belum",F2:F11)</code></td></tr>
+      </table></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="data/proyek.csv" download style="padding:8px 14px;font-size:.85rem">⬇️ Unduh CSV</a>
+        <button class="btn btn-ghost" data-page="sim" style="padding:8px 14px;font-size:.85rem">🧪 Buka Simulator</button>
+      </div>
+      <div class="good" style="margin-top:10px;font-size:.85rem"><b>Latihan kasus:</b> "Berapa % progress proyek secara keseluruhan dan berapa bobot task yang belum dimulai?"</div>
+    </div>
+
   </div>
 
   <h2 class="rv" style="margin-top:26px"><span class="bar"></span> Tutorial Mini: Dari Data Mentah ke Laporan</h2>
@@ -842,6 +899,53 @@
         <li>Karyawan "perlu perhatian" (telat &gt; 3 DAN masa kerja &lt; 3): <span class="f">=IF(AND(D2&gt;3,C2&lt;3),"PERHATIAN","OK")</span> → salin ke kolom F.</li>
       </ol>
       <div class="good" style="font-size:.83rem">Ini pola dashboard sederhana: data sumber + kolom turunan + ringkasan di samping.</div>
+    </div>
+
+  </div>
+
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🍜 Kasus 4 · Analisis Laba Warung</h3>
+      <p style="font-size:.88rem;color:var(--mut);margin:0 0 8px">Dari data keuangan 11 bulan, buat ringkasan profitabilitas.</p>
+      <ol style="margin:6px 0 8px 20px;font-size:.88rem">
+        <li>Import <b>data/keuangan-warung.csv</b>.</li>
+        <li>Total pendapatan: <span class="f">=SUM(B2:B12)</span> → H2.</li>
+        <li>Total laba: <span class="f">=SUM(E2:E12)</span> → H3.</li>
+        <li>Rata-rata margin: <span class="f">=AVERAGE(F2:F12)</span> → H4 (format %).</li>
+        <li>Bulan laba tertinggi: <span class="f">=MAX(E2:E12)</span> → H5.</li>
+        <li>Nama bulan terbaik: <span class="f">=INDEX(A2:A12,MATCH(MAX(E2:E12),E2:E12,0))</span> → H6.</li>
+        <li>Laba terendah: <span class="f">=MIN(E2:E12)</span> → H7.</li>
+      </ol>
+      <div class="good" style="font-size:.83rem">Pola: ringkasan KPI di samping data, semua referensi ke range sumber.</div>
+    </div>
+
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">👥 Kasus 5 · Segmentasi Pelanggan</h3>
+      <p style="font-size:.88rem;color:var(--mut);margin:0 0 8px">Dari data pelanggan, buat ringkasan per segment dan kota.</p>
+      <ol style="margin:6px 0 8px 20px;font-size:.88rem">
+        <li>Import <b>data/pelanggan.csv</b>.</li>
+        <li>Jumlah pelanggan VIP: <span class="f">=COUNTIF(F2:F12,"VIP")</span> → H2.</li>
+        <li>Total belanja VIP: <span class="f">=SUMIF(F2:F12,"VIP",E2:E12)</span> → H3.</li>
+        <li>Pelanggan di Medan: <span class="f">=COUNTIF(D2:D12,"Medan")</span> → H4.</li>
+        <li>Total belanja Medan: <span class="f">=SUMIF(D2:D12,"Medan",E2:E12)</span> → H5.</li>
+        <li>Rata-rata belanja per pelanggan: <span class="f">=AVERAGE(E2:E12)</span> → H6.</li>
+        <li>Cari nama pelanggan ID C007: <span class="f">=VLOOKUP("C007",A2:F12,2,FALSE)</span> → H7.</li>
+      </ol>
+      <div class="good" style="font-size:.83rem">Latihan multi-kriteria: coba SUMIFS untuk "VIP di Medan".</div>
+    </div>
+
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🗂️ Kasus 6 · Monitoring Progress Proyek</h3>
+      <p style="font-size:.88rem;color:var(--mut);margin:0 0 8px">Dari data proyek, hitung progress keseluruhan dan identifikasi bottleneck.</p>
+      <ol style="margin:6px 0 8px 20px;font-size:.88rem">
+        <li>Import <b>data/proyek.csv</b>.</li>
+        <li>Progress tertimbang: <span class="f">=SUMPRODUCT(E2:E11,F2:F11)/SUM(F2:F11)</span> → H2 (format %).</li>
+        <li>Task selesai: <span class="f">=COUNTIF(D2:D11,"Selesai")</span> → H3.</li>
+        <li>Task belum mulai: <span class="f">=COUNTIF(D2:D11,"Belum")</span> → H4.</li>
+        <li>Bobot task belum mulai: <span class="f">=SUMIF(D2:D11,"Belum",F2:F11)</span> → H5.</li>
+        <li>Rata-rata % task: <span class="f">=AVERAGE(E2:E11)</span> → H6.</li>
+        <li>Task dengan % terendah: <span class="f">=MIN(E2:E11)</span> → H7.</li>
+      </ol>
+      <div class="good" style="font-size:.83rem">SUMPRODUCT = senjata rahasia untuk rata-rata tertimbang tanpa kolom bantu.</div>
     </div>
 
   </div>
