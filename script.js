@@ -1921,6 +1921,32 @@ function refreshDashboard() {
     }
   }
   refreshTicks();
+  refreshBadges();
+}
+
+const BADGES = [
+  { id: 'm1', ico: '🌱', name: 'Pemula', desc: 'Selesaikan Modul 1', check: p => p.modules.m1 },
+  { id: 'm2', ico: '➕', name: 'Master Rumus', desc: 'Selesaikan Modul 2', check: p => p.modules.m2 },
+  { id: 'm3', ico: '🔤', name: 'Teks Ninja', desc: 'Selesaikan Modul 3', check: p => p.modules.m3 },
+  { id: 'm4', ico: '🧠', name: 'Logika Pro', desc: 'Selesaikan Modul 4', check: p => p.modules.m4 },
+  { id: 'm5', ico: '🔍', name: 'Lookup Hero', desc: 'Selesaikan Modul 5', check: p => p.modules.m5 },
+  { id: 'm6', ico: '📊', name: 'Analyst', desc: 'Selesaikan Modul 6', check: p => p.modules.m6 },
+  { id: 'm7', ico: '🧹', name: 'Data Cleaner', desc: 'Selesaikan Modul 7', check: p => p.modules.m7 },
+  { id: 'm8', ico: '📈', name: 'Pivot Master', desc: 'Selesaikan Modul 8', check: p => p.modules.m8 },
+  { id: 'm9', ico: '🛡️', name: 'Gudang Pro', desc: 'Selesaikan Modul 9', check: p => p.modules.m9 },
+  { id: 'exam', ico: '🏆', name: 'Lulus Ujian', desc: 'Lulus Ujian Akhir', check: p => p.modules.exam },
+  { id: 'allmod', ico: '🎓', name: 'Tuntas Semua Modul', desc: 'Selesaikan 9 modul', check: p => ['m1','m2','m3','m4','m5','m6','m7','m8','m9'].every(k => p.modules[k]) },
+  { id: 'perfect', ico: '⭐', name: 'Perfeksionis', desc: 'Semua kuis ≥ 90%', check: p => Object.keys(p.quiz).length >= 9 && Object.values(p.quiz).every(v => v >= 90) },
+  { id: 'speed', ico: '⚡', name: 'Quiz Master', desc: 'Lulus 5 kuis', check: p => Object.values(p.quiz).filter(v => v >= 70).length >= 5 }
+];
+
+function refreshBadges() {
+  const grid = document.getElementById('badgeGrid');
+  if (!grid) return;
+  grid.innerHTML = BADGES.map(b => {
+    const unlocked = !!b.check(prog);
+    return '<div class="badge ' + (unlocked ? 'unlocked' : '') + '"><span class="b-ico">' + b.ico + '</span><div class="b-name">' + b.name + '</div><div class="b-desc">' + b.desc + '</div></div>';
+  }).join('');
 }
 
 $$('.done-btn').forEach(b => b.addEventListener('click', () => {

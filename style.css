@@ -85,6 +85,12 @@ kbd{font-family:'IBM Plex Mono';background:#fff;border:1px solid #C9D6C7;border-
 .hero-type{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--green);min-height:1.4em;margin:6px 0 14px;letter-spacing:.3px}
 [data-theme="dark"] .hero-type{color:var(--lime)}
 .hero-type .caret{animation:blink 1s steps(1) infinite;margin-left:2px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.badge{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center;font-size:.85rem;transition:.2s;opacity:.45;filter:grayscale(1)}
+.badge.unlocked{opacity:1;filter:none;border-color:var(--green);box-shadow:0 4px 12px rgba(33,163,102,.15)}
+.badge .b-ico{font-size:1.6rem;display:block;margin-bottom:4px}
+.badge .b-name{font-weight:700;color:var(--ink)}
+.badge .b-desc{font-size:.72rem;color:var(--mut);margin-top:2px}
 
 /* Command palette */
 .cmd-palette{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:10000;display:flex;align-items:flex-start;justify-content:center;padding-top:12vh}
