@@ -1424,6 +1424,13 @@ applyPrefsUI();
 initChat({ body: '#chatBody', input: '#chatInput', send: '#chatSend', status: '#chatStatus', suggest: '#chatSuggest', fileInput: '#chatFileInput', filePreview: '#chatFilePreview', storeKey: 'excellab_chat_main' });
 initChat({ body: '#fabBody', input: '#fabInput', send: '#fabSend', status: '#fabStatus', suggest: null, fileInput: '#fabFileInput', filePreview: '#fabFilePreview', storeKey: 'excellab_chat_fab' });
 
+/* ===== PWA: SERVICE WORKER ===== */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
 /* ===== BUBBLE TOGGLE ===== */
 const chatFab = $('#chatFab'), chatPop = $('#chatPop');
 if (chatFab && chatPop) {

@@ -1,0 +1,14 @@
+{
+  "name": "ExcelLab — Belajar Excel",
+  "short_name": "ExcelLab",
+  "description": "Kursus Excel interaktif: modul, simulator rumus, kuis, ujian, dan cheat sheet.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0E1F17",
+  "theme_color": "#21A366",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

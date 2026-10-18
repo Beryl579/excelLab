@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#21A366">
+<link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 <button class="mburger" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
@@ -792,6 +795,55 @@
       <li>Ubah Qty pada baris mana pun — lihat Total dan rekap ikut berubah otomatis.</li>
     </ol>
     <div class="tip" style="margin:0">💡 Inilah inti Excel: data rapi + rumus yang referensi ke sumber = laporan hidup yang update otomatis.</div>
+  </div>
+
+  <h2 class="rv" style="margin-top:26px"><span class="bar"></span> Studi Kasus End-to-End</h2>
+  <div class="grid2" style="margin-top:8px">
+
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">📊 Kasus 1 · Laporan Penjualan Bulanan</h3>
+      <p style="font-size:.88rem;color:var(--mut);margin:0 0 8px">Dari data transaksi harian (CSV Penjualan) buat laporan: total per kategori, produk terlaris, dan rata-rata nilai transaksi.</p>
+      <ol style="margin:6px 0 8px 20px;font-size:.88rem">
+        <li>Import <b>data/penjualan.csv</b>.</li>
+        <li>Total keseluruhan: <span class="f">=SUM(F2:F12)</span> → taruh di H2.</li>
+        <li>Total Elektronik: <span class="f">=SUMIF(C2:C12,"Elektronik",F2:F12)</span> → H3.</li>
+        <li>Total ATK: <span class="f">=SUMIF(C2:C12,"ATK",F2:F12)</span> → H4.</li>
+        <li>Jumlah transaksi: <span class="f">=COUNTA(A2:A12)</span> → H5.</li>
+        <li>Rata-rata transaksi: <span class="f">=AVERAGE(F2:F12)</span> → H6.</li>
+        <li>Transaksi terbesar: <span class="f">=MAX(F2:F12)</span> → H7.</li>
+      </ol>
+      <div class="good" style="font-size:.83rem">Hasil akhir: tabel ringkasan kecil yang update otomatis saat data berubah.</div>
+    </div>
+
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🏭 Kasus 2 · Sistem Stok Minimum Gudang</h3>
+      <p style="font-size:.88rem;color:var(--mut);margin:0 0 8px">Otomatis tandai barang yang harus di-restock dan hitung total kebutuhan restock.</p>
+      <ol style="margin:6px 0 8px 20px;font-size:.88rem">
+        <li>Import <b>data/gudang.csv</b>.</li>
+        <li>Tambah kolom G "Status": <span class="f">=IF(F2&lt;=5,"RESTOCK","AMAN")</span> (salin ke bawah).</li>
+        <li>Tambah kolom H "Kebutuhan" (target min 10): <span class="f">=IF(F2&lt;10,10-F2,0)</span>.</li>
+        <li>Jumlah barang RESTOCK: <span class="f">=COUNTIF(G2:G12,"RESTOCK")</span>.</li>
+        <li>Total kebutuhan restock: <span class="f">=SUM(H2:H12)</span>.</li>
+        <li>Stok paling kritis: <span class="f">=MIN(F2:F12)</span>.</li>
+      </ol>
+      <div class="good" style="font-size:.83rem">Kombinasikan dengan Conditional Formatting: warnai merah sel yang berisi "RESTOCK".</div>
+    </div>
+
+    <div class="card rv">
+      <h3 style="margin:0 0 6px">🧑‍💼 Kasus 3 · Dashboard HR (Masa Kerja &amp; Disiplin)</h3>
+      <p style="font-size:.88rem;color:var(--mut);margin:0 0 8px">Dari data absensi, buat ringkasan: masa kerja rata-rata, jumlah karyawan yang dapat SP, dan daftar yang perlu perhatian.</p>
+      <ol style="margin:6px 0 8px 20px;font-size:.88rem">
+        <li>Import <b>data/absensi.csv</b>.</li>
+        <li>Rata-rata masa kerja: <span class="f">=AVERAGE(C2:C12)</span> → H2.</li>
+        <li>Karyawan dengan SP: <span class="f">=COUNTIF(E2:E12,"SP")</span> → H3.</li>
+        <li>Rata-rata telat: <span class="f">=AVERAGE(D2:D12)</span> → H4.</li>
+        <li>Telat tertinggi: <span class="f">=MAX(D2:D12)</span> → H5.</li>
+        <li>Masa kerja terlama: <span class="f">=MAX(C2:C12)</span> → H6.</li>
+        <li>Karyawan "perlu perhatian" (telat &gt; 3 DAN masa kerja &lt; 3): <span class="f">=IF(AND(D2&gt;3,C2&lt;3),"PERHATIAN","OK")</span> → salin ke kolom F.</li>
+      </ol>
+      <div class="good" style="font-size:.83rem">Ini pola dashboard sederhana: data sumber + kolom turunan + ringkasan di samping.</div>
+    </div>
+
   </div>
 
   <div class="page-foot">
