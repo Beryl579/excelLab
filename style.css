@@ -84,6 +84,25 @@ kbd{font-family:'IBM Plex Mono';background:#fff;border:1px solid #C9D6C7;border-
 @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .hero-type{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;color:var(--lime);min-height:1.4em;margin:6px 0 14px;letter-spacing:.3px}
 .hero-type .caret{animation:blink 1s steps(1) infinite;margin-left:2px}
+
+/* Command palette */
+.cmd-palette{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:10000;display:flex;align-items:flex-start;justify-content:center;padding-top:12vh}
+.cmd-palette[hidden]{display:none}
+.cmd-box{width:min(560px,92vw);background:var(--card,#fff);border:1px solid var(--line,#ddd);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.25);overflow:hidden}
+.cmd-box input{width:100%;border:0;border-bottom:1px solid var(--line,#ddd);padding:14px 16px;font:inherit;font-size:1rem;outline:none;background:transparent;color:var(--ink,#111)}
+.cmd-list{max-height:320px;overflow:auto;padding:6px}
+.cmd-item{padding:10px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:.92rem}
+.cmd-item:hover,.cmd-item.active{background:rgba(33,163,102,.12)}
+.cmd-hint{padding:8px 14px;font-size:.75rem;color:var(--mut,#666);border-top:1px solid var(--line,#ddd)}
+
+/* Notes panel */
+.notes-fab{position:fixed;bottom:20px;left:20px;z-index:9990;width:46px;height:46px;border-radius:50%;border:0;background:var(--green,#21A366);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.notes-panel{position:fixed;bottom:76px;left:20px;z-index:9991;width:min(320px,90vw);background:var(--card,#fff);border:1px solid var(--line,#ddd);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.2);overflow:hidden}
+.notes-panel[hidden]{display:none}
+.notes-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line,#ddd);font-size:.9rem}
+.notes-close{border:0;background:transparent;cursor:pointer;font-size:1rem}
+.notes-sub{padding:8px 14px 0;font-size:.78rem;color:var(--mut,#666)}
+.notes-panel textarea{width:100%;border:0;padding:10px 14px;font:inherit;font-size:.9rem;resize:vertical;min-height:120px;outline:none;background:transparent;color:var(--ink,#111)}
 @keyframes blink{50%{opacity:0}}
 .rv.in{opacity:1;transform:none}
 

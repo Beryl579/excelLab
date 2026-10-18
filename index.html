@@ -1228,6 +1228,23 @@
 
 </main>
 
+<!-- Command Palette -->
+<div id="cmdPalette" class="cmd-palette" hidden>
+  <div class="cmd-box">
+    <input id="cmdInput" placeholder="🔍 Cari halaman, modul, dataset…" autocomplete="off" spellcheck="false">
+    <div id="cmdList" class="cmd-list"></div>
+    <div class="cmd-hint">↑↓ navigasi · Enter buka · Esc tutup · Ctrl+K</div>
+  </div>
+</div>
+
+<!-- Notes FAB -->
+<button id="notesFab" class="notes-fab" title="Catatan pribadi" aria-label="Catatan pribadi">📝</button>
+<div id="notesPanel" class="notes-panel" hidden>
+  <div class="notes-head"><b>Catatan Pribadi</b><button id="notesClose" class="notes-close">✕</button></div>
+  <div class="notes-sub" id="notesSub">Catatan untuk halaman ini</div>
+  <textarea id="notesArea" placeholder="Tulis catatan belajarmu di sini… (tersimpan otomatis)"></textarea>
+</div>
+
 <script src="data.js"></script>
 <script src="script.js"></script>
 </body>

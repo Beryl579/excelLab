@@ -1613,6 +1613,116 @@ document.addEventListener('click', e => {
   setTimeout(() => r.remove(), 650);
 });
 
+/* ===== COMMAND PALETTE ===== */
+const CMD_PAGES = [
+  { id: 'home', label: '🏠 Dashboard' },
+  { id: 'm1', label: '1 · Dasar Excel' },
+  { id: 'm2', label: '2 · Rumus Dasar' },
+  { id: 'm3', label: '3 · Fungsi Teks' },
+  { id: 'm4', label: '4 · Fungsi Logika' },
+  { id: 'm5', label: '5 · VLOOKUP & Lookup' },
+  { id: 'm6', label: '6 · Analisis Data' },
+  { id: 'm7', label: '7 · Data & Tanggal' },
+  { id: 'm8', label: '8 · Pivot Table' },
+  { id: 'm9', label: '9 · Validasi & Format' },
+  { id: 'sim', label: '🧪 Simulator Rumus' },
+  { id: 'exam', label: '🎯 Ujian Akhir' },
+  { id: 'shortcut', label: '⌨️ Shortcut & Trainer' },
+  { id: 'ref', label: '📖 Referensi Rumus' },
+  { id: 'cheatsheet', label: '🖨️ Cheat Sheet Cetak' },
+  { id: 'data', label: '📂 Contoh Data & Kasus' },
+  { id: 'video', label: '🎬 Video Belajar' },
+  { id: 'chat', label: '🤖 Tutor AI Excel' }
+];
+const cmdPalette = document.getElementById('cmdPalette');
+const cmdInput = document.getElementById('cmdInput');
+const cmdList = document.getElementById('cmdList');
+let cmdActive = 0, cmdFiltered = [...CMD_PAGES];
+
+function openCmd() {
+  if (!cmdPalette) return;
+  cmdPalette.hidden = false;
+  cmdInput.value = '';
+  cmdFiltered = [...CMD_PAGES];
+  cmdActive = 0;
+  renderCmd();
+  setTimeout(() => cmdInput && cmdInput.focus(), 30);
+}
+function closeCmd() { if (cmdPalette) cmdPalette.hidden = true; }
+function renderCmd() {
+  if (!cmdList) return;
+  cmdList.innerHTML = cmdFiltered.map((p, i) =>
+    '<div class="cmd-item' + (i === cmdActive ? ' active' : '') + '" data-id="' + p.id + '">' + p.label + '</div>'
+  ).join('') || '<div class="cmd-item" style="opacity:.6">Tidak ditemukan</div>';
+  cmdList.querySelectorAll('.cmd-item[data-id]').forEach(el => {
+    el.addEventListener('click', () => { go(el.dataset.id); closeCmd(); });
+  });
+}
+if (cmdInput) {
+  cmdInput.addEventListener('input', () => {
+    const q = cmdInput.value.trim().toLowerCase();
+    cmdFiltered = CMD_PAGES.filter(p => p.label.toLowerCase().includes(q));
+    cmdActive = 0;
+    renderCmd();
+  });
+  cmdInput.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); cmdActive = Math.min(cmdFiltered.length - 1, cmdActive + 1); renderCmd(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); cmdActive = Math.max(0, cmdActive - 1); renderCmd(); }
+    else if (e.key === 'Enter') {
+      e.preventDefault();
+      const p = cmdFiltered[cmdActive];
+      if (p) { go(p.id); closeCmd(); }
+    } else if (e.key === 'Escape') { closeCmd(); }
+  });
+}
+if (cmdPalette) cmdPalette.addEventListener('click', e => { if (e.target === cmdPalette) closeCmd(); });
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openCmd(); }
+  else if (e.key === '/' && !/input|textarea/i.test((e.target && e.target.tagName) || '')) { e.preventDefault(); openCmd(); }
+  else if (e.key === 'Escape' && cmdPalette && !cmdPalette.hidden) { closeCmd(); }
+});
+
+/* ===== NOTES PANEL ===== */
+const NOTES_KEY = 'excellab_notes';
+let notes = {};
+try { const r = localStorage.getItem(NOTES_KEY); if (r) notes = JSON.parse(r) || {}; } catch (e) {}
+const notesFab = document.getElementById('notesFab');
+const notesPanel = document.getElementById('notesPanel');
+const notesArea = document.getElementById('notesArea');
+const notesSub = document.getElementById('notesSub');
+const notesClose = document.getElementById('notesClose');
+
+function currentPageId() {
+  const active = document.querySelector('.page.active');
+  return active ? active.id.replace('page-', '') : 'home';
+}
+function loadNote() {
+  if (!notesArea) return;
+  const id = currentPageId();
+  notesArea.value = notes[id] || '';
+  if (notesSub) notesSub.textContent = 'Catatan untuk: ' + id;
+}
+function saveNote() {
+  if (!notesArea) return;
+  notes[currentPageId()] = notesArea.value;
+  try { localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); } catch (e) {}
+}
+if (notesArea) notesArea.addEventListener('input', saveNote);
+if (notesFab) notesFab.addEventListener('click', () => {
+  if (!notesPanel) return;
+  const wasHidden = notesPanel.hidden;
+  notesPanel.hidden = !wasHidden;
+  if (wasHidden) loadNote();
+});
+if (notesClose) notesClose.addEventListener('click', () => { if (notesPanel) notesPanel.hidden = true; });
+// reload note when navigating
+const _go = go;
+// wrap go to refresh notes label
+const origGo = go;
+// monkey-patch by redefining? go is function declaration (hoisted) -> reassign not allowed easily; instead hook via click already calls go; we'll listen for page changes via MutationObserver on .page.active
+const mo = new MutationObserver(() => { if (notesPanel && !notesPanel.hidden) loadNote(); });
+document.querySelectorAll('.page').forEach(p => mo.observe(p, { attributes: true, attributeFilter: ['class'] }));
+
 /* ===== BUBBLE TOGGLE ===== */
 const chatFab = $('#chatFab'), chatPop = $('#chatPop');
 if (chatFab && chatPop) {
