@@ -278,7 +278,7 @@ function renderQuiz(key) {
         const pass = pct >= 70;
         const prev = prog.quiz[key] || 0;
         if (pct > prev) prog.quiz[key] = pct;
-        if (key === 'exam' && pass) prog.modules['exam'] = true;
+        if (key === 'exam' && pass) { prog.modules['exam'] = true; confetti(); }
         save();
         refreshTicks();
         let h = '<div style="text-align:center;padding:14px 0">';
@@ -1671,19 +1671,69 @@ function refreshTicks() {
   if (de) de.style.display = prog.modules['exam'] ? 'block' : 'none';
 }
 
+function animCount(el, from, to, fmt) {
+  if (!el) return;
+  const dur = 650; const t0 = performance.now();
+  function tick(now) {
+    const p = Math.min(1, (now - t0) / dur);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(Math.round(from + (to - from) * ease));
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+function confetti() {
+  const colors = ['#21A366', '#B7E96D', '#FFD9A0', '#FFB4A0', '#7EC8E3', '#F7C5CC'];
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden';
+  document.body.appendChild(wrap);
+  for (let i = 0; i < 90; i++) {
+    const p = document.createElement('div');
+    const size = 6 + Math.random() * 8;
+    p.style.cssText = 'position:absolute;top:-20px;left:' + (Math.random() * 100) + '%;width:' + size + 'px;height:' + (size * 0.6) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';border-radius:2px;opacity:.9;transform:rotate(' + (Math.random() * 360) + 'deg)';
+    const dur = 1800 + Math.random() * 1600;
+    const drift = (Math.random() - 0.5) * 200;
+    p.animate([
+      { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+      { transform: 'translate(' + drift + 'px,' + (window.innerHeight + 40) + 'px) rotate(' + (Math.random() * 720) + 'deg)', opacity: 0 }
+    ], { duration: dur, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' });
+    wrap.appendChild(p);
+  }
+  setTimeout(() => wrap.remove(), 3600);
+}
+
 function refreshDashboard() {
   if (typeof MODULES === 'undefined') return;
   const done = MODULES.filter(m => prog.modules[m[0]]).length;
   const stModul = $('#stModul'), pbModul = $('#pbModul');
-  if (stModul) stModul.textContent = done + '/' + MODULES.length;
+  if (stModul) {
+    const prev = +(stModul.dataset.v || 0);
+    animCount(stModul, prev, done, v => v + '/' + MODULES.length);
+    stModul.dataset.v = done;
+  }
   if (pbModul) pbModul.style.width = (done / MODULES.length * 100) + '%';
   const keys = [...MODULES.map(m => m[0]), 'exam'];
   const passed = keys.filter(k => (prog.quiz[k] || 0) >= 70).length;
   const stQuiz = $('#stQuiz');
-  if (stQuiz) stQuiz.textContent = passed + '/' + keys.length;
+  if (stQuiz) {
+    const prev = +(stQuiz.dataset.v || 0);
+    animCount(stQuiz, prev, passed, v => v + '/' + keys.length);
+    stQuiz.dataset.v = passed;
+  }
   const vals = keys.map(k => prog.quiz[k]).filter(v => v !== undefined);
   const stRata = $('#stRata');
-  if (stRata) stRata.textContent = vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) + '%' : '–';
+  if (stRata) {
+    const target = vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : 0;
+    const prev = +(stRata.dataset.v || 0);
+    if (vals.length) {
+      animCount(stRata, prev, target, v => v + '%');
+      stRata.dataset.v = target;
+    } else {
+      stRata.textContent = '–';
+      stRata.dataset.v = 0;
+    }
+  }
   refreshTicks();
 }
 
