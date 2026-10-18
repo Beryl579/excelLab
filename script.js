@@ -220,9 +220,23 @@ try {
     { f: '=MAX(B2:B5)', r: '92' },
     { f: '=MIN(B2:B5)', r: '68' },
     { f: '=COUNTIF(B2:B5,">=75")', r: '3' },
+    { f: '=COUNTA(A2:A5)', r: '4' },
     { f: '=IF(B2>=75,"LULUS","REMED")', r: 'LULUS' },
     { f: '=SUMIF(A2:A5,"Beryl",B2:B5)', r: '92' },
-    { f: '=ROUND(AVERAGE(B2:B5),0)', r: '79' }
+    { f: '=VLOOKUP("Beryl",A2:B5,2,0)', r: '92' },
+    { f: '=IFERROR(VLOOKUP("Z",A2:B5,2,0),"tidak ketemu")', r: 'tidak ketemu' },
+    { f: '=ROUND(AVERAGE(B2:B5),0)', r: '79' },
+    { f: '=LEFT("MEDAN",3)', r: '"MED"' },
+    { f: '=MID("TEKNIK",2,3)', r: '"EKN"' },
+    { f: '=RIGHT("EXCEL",2)', r: '"EL"' },
+    { f: '=LEN("HALO")', r: '4' },
+    { f: '=UPPER("medan")', r: '"MEDAN"' },
+    { f: '=PROPER("beryl sinaga")', r: '"Beryl Sinaga"' },
+    { f: '=TRIM("  a  b  ")', r: '"a b"' },
+    { f: '="Halo"&" "&"Excel"', r: '"Halo Excel"' },
+    { f: '=TEXT(0.5,"0%")', r: '"50%"' },
+    { f: '=ABS(-7)', r: '7' },
+    { f: '=DATEDIF("2020-01-01","2024-01-01","Y")', r: '4' }
   ];
   let di = 0, i = 0, step = 0;
   function loop() {
