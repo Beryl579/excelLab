@@ -174,6 +174,9 @@ try {
   io = new IntersectionObserver(es => {
     es.forEach(en => {
       if (en.isIntersecting) {
+        const siblings = Array.from(en.target.parentElement ? en.target.parentElement.children : []);
+        const idx = siblings.indexOf(en.target);
+        if (idx >= 0) en.target.style.transitionDelay = (Math.min(idx, 8) * 0.07) + 's';
         en.target.classList.add('in');
         io.unobserve(en.target);
       }
@@ -183,6 +186,29 @@ try {
 } catch (e) {
   $$('.rv').forEach(el => el.classList.add('in'));
 }
+
+/* ================= HERO TYPEWRITER ================= */
+(function() {
+  const el = document.getElementById('heroType');
+  if (!el) return;
+  const phrases = ['=SUM(B2:B5) → 315', '=VLOOKUP("K02",A2:C10,3,0) → "Printer"', '=IF(B2>=75,"LULUS","REMED") → "LULUS"', '=AVERAGE(B2:B5) → 78.75', '=LEFT("MEDAN",3) → "MED"'];
+  let pi = 0, ci = 0, deleting = false;
+  function tick() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      ci++;
+      el.innerHTML = escapeHtml(phrase.slice(0, ci)) + '<span class="caret">▌</span>';
+      if (ci >= phrase.length) { deleting = true; setTimeout(tick, 1600); return; }
+      setTimeout(tick, 55);
+    } else {
+      ci--;
+      el.innerHTML = escapeHtml(phrase.slice(0, ci)) + '<span class="caret">▌</span>';
+      if (ci <= 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 300); return; }
+      setTimeout(tick, 30);
+    }
+  }
+  tick();
+})();
 
 /* ================= HERO DEMO ================= */
 (function() {
@@ -278,7 +304,8 @@ function renderQuiz(key) {
         const pass = pct >= 70;
         const prev = prog.quiz[key] || 0;
         if (pct > prev) prog.quiz[key] = pct;
-        if (key === 'exam' && pass) { prog.modules['exam'] = true; confetti(); }
+        if (key === 'exam' && pass) prog.modules['exam'] = true;
+        if (pass) confetti();
         save();
         refreshTicks();
         let h = '<div style="text-align:center;padding:14px 0">';
@@ -866,6 +893,8 @@ if (fileImport) {
   fileImport.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
+    const gridEl = $('#simGrid');
+    if (gridEl) gridEl.classList.add('skeleton');
     const reader = new FileReader();
     reader.onload = () => {
       grid = {};
@@ -880,6 +909,7 @@ if (fileImport) {
           if (val !== undefined && String(val).trim() !== '') grid[c + r] = String(val).trim();
         });
       });
+      if (gridEl) gridEl.classList.remove('skeleton');
       selRef = 'A1';
       renderGrid();
       syncFx();
@@ -1554,6 +1584,21 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/* ===== RIPPLE EFFECT ===== */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.btn');
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  r.style.width = r.style.height = size + 'px';
+  r.style.left = (e.clientX - rect.left - size / 2) + 'px';
+  r.style.top = (e.clientY - rect.top - size / 2) + 'px';
+  btn.appendChild(r);
+  setTimeout(() => r.remove(), 650);
+});
+
 /* ===== BUBBLE TOGGLE ===== */
 const chatFab = $('#chatFab'), chatPop = $('#chatPop');
 if (chatFab && chatPop) {
@@ -1647,8 +1692,17 @@ renderRefs();
 /* ================= DASHBOARD & PROGRESS ================= */
 const modGrid = $('#modGrid');
 if (modGrid && typeof MODULES !== 'undefined') {
-  modGrid.innerHTML = MODULES.map((m, i) => '<div class="card mod-card rv"><div class="num">0' + (i + 1) + '</div><span class="tag" id="tag-' + m[0] + '">Belum mulai</span><h3>' + m[1] + '</h3><p>' + m[2] + '</p><div class="row"><button class="btn btn-primary" data-page="' + m[0] + '" style="padding:8px 16px;font-size:.85rem">Buka Modul →</button></div></div>').join('');
+  modGrid.innerHTML = MODULES.map((m, i) => '<div class="card mod-card rv"><div class="mod-ring"><svg viewBox="0 0 44 44" width="48" height="48"><circle class="mod-ring-bg" cx="22" cy="22" r="18"></circle><circle class="mod-ring-fg" id="ring-' + m[0] + '" cx="22" cy="22" r="18" style="--p:0"></circle></svg><div class="num">0' + (i + 1) + '</div></div><span class="tag" id="tag-' + m[0] + '">Belum mulai</span><h3>' + m[1] + '</h3><p>' + m[2] + '</p><div class="row"><button class="btn btn-primary" data-page="' + m[0] + '" style="padding:8px 16px;font-size:.85rem">Buka Modul →</button></div></div>').join('');
   try { $$('#modGrid .rv').forEach(el => io.observe(el)); } catch (e) { $$('#modGrid .rv').forEach(el => el.classList.add('in')); }
+  $$('#modGrid .mod-card').forEach(card => {
+    card.addEventListener('mousemove', ev => {
+      const r = card.getBoundingClientRect();
+      const x = (ev.clientX - r.left) / r.width - 0.5;
+      const y = (ev.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'perspective(600px) rotateY(' + (x * 14) + 'deg) rotateX(' + (-y * 14) + 'deg) translateY(-4px)';
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
 }
 
 function refreshTicks() {
@@ -1661,6 +1715,11 @@ function refreshTicks() {
       if (prog.modules[m[0]]) { tag.textContent = '✔ Selesai'; tag.className = 'tag tag-green'; }
       else if (prog.quiz[m[0]] !== undefined) { tag.textContent = '🔄 In Progress'; tag.className = 'tag tag-amber'; }
       else { tag.textContent = 'Belum mulai'; tag.className = 'tag'; }
+    }
+    const ring = document.getElementById('ring-' + m[0]);
+    if (ring) {
+      const p = prog.quiz[m[0]] !== undefined ? prog.quiz[m[0]] : (prog.modules[m[0]] ? 100 : 0);
+      ring.style.setProperty('--p', p);
     }
     const d = document.getElementById('done-' + m[0]);
     if (d) d.style.display = prog.modules[m[0]] ? 'block' : 'none';
@@ -1712,7 +1771,10 @@ function refreshDashboard() {
     animCount(stModul, prev, done, v => v + '/' + MODULES.length);
     stModul.dataset.v = done;
   }
-  if (pbModul) pbModul.style.width = (done / MODULES.length * 100) + '%';
+  if (pbModul) {
+    pbModul.style.width = (done / MODULES.length * 100) + '%';
+    if (done === MODULES.length) pbModul.classList.add('full'); else pbModul.classList.remove('full');
+  }
   const keys = [...MODULES.map(m => m[0]), 'exam'];
   const passed = keys.filter(k => (prog.quiz[k] || 0) >= 70).length;
   const stQuiz = $('#stQuiz');
