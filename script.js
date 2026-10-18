@@ -54,6 +54,100 @@ function resetProgres() {
   alert('Progres berhasil direset. Semangat belajar lagi! 💪');
 }
 
+function backupProgres() {
+  const data = {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    prog: prog,
+    prefs: (typeof prefs !== 'undefined' ? prefs : null),
+    theme: document.documentElement.getAttribute('data-theme') || 'light'
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'excellab-progres-' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function restoreProgres(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!data || !data.prog || !data.prog.modules || !data.prog.quiz) throw new Error('format');
+      prog = data.prog;
+      save();
+      if (data.prefs && typeof prefs !== 'undefined') {
+        prefs = data.prefs;
+        if (typeof savePrefs === 'function') savePrefs();
+        if (typeof applyPrefsUI === 'function') applyPrefsUI();
+      }
+      if (data.theme) applyTheme(data.theme);
+      $$('.tick').forEach(t => t.textContent = '');
+      refreshTicks();
+      refreshDashboard();
+      alert('Progres berhasil dipulihkan. Selamat belajar lagi! 🎉');
+    } catch (e) {
+      alert('File backup tidak valid. Pastikan file hasil Backup Progres ExcelLab.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+document.addEventListener('change', e => {
+  if (e.target && e.target.id === 'restoreFile' && e.target.files && e.target.files[0]) {
+    restoreProgres(e.target.files[0]);
+    e.target.value = '';
+  }
+});
+
+function printCertificate(score) {
+  const defaultName = (typeof prefs !== 'undefined' && prefs.nick) ? prefs.nick : '';
+  const name = (prompt('Nama untuk sertifikat:', defaultName) || 'Peserta ExcelLab').trim();
+  const date = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  const html = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>Sertifikat ExcelLab</title>
+<style>
+  body { font-family: "Sora","IBM Plex Sans",sans-serif; background:#f4f7f5; margin:0; padding:40px; }
+  .cert { max-width:900px; margin:0 auto; background:#fff; border:8px double #21A366; padding:60px 50px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,.1); }
+  .logo { display:inline-grid; grid-template-columns:1fr 1fr; gap:4px; width:48px; height:48px; margin-bottom:14px; }
+  .logo div { background:#21A366; border-radius:4px; }
+  .logo div:last-child { background:#B7E96D; }
+  h1 { font-size:2.4rem; color:#0E1F17; margin:0 0 6px; }
+  .sub { color:#5C7264; margin:0 0 30px; font-size:1.05rem; }
+  .name { font-size:2.6rem; color:#21A366; font-weight:800; margin:10px 0 6px; border-bottom:2px solid #B7E96D; display:inline-block; padding:0 24px 6px; }
+  .desc { color:#333; font-size:1.05rem; line-height:1.7; margin:24px 0; }
+  .score { display:inline-block; background:#EAF6EF; color:#0E1F17; padding:10px 22px; border-radius:999px; font-weight:700; font-size:1.1rem; margin:8px 0 24px; }
+  .foot { display:flex; justify-content:space-between; margin-top:40px; color:#5C7264; font-size:.9rem; }
+  .sig { border-top:1px solid #999; padding-top:6px; width:200px; text-align:center; }
+  @media print { body { background:#fff; padding:0; } .cert { box-shadow:none; } }
+</style></head><body>
+<div class="cert">
+  <div class="logo"><div></div><div></div><div></div><div></div></div>
+  <h1>Sertifikat Kelulusan</h1>
+  <p class="sub">ExcelLab — Belajar Excel dari Nol sampai Siap Kerja</p>
+  <p style="color:#5C7264;margin:0">Diberikan kepada</p>
+  <div class="name">${escapeHtml(name)}</div>
+  <p class="desc">Telah menyelesaikan seluruh modul dan <b>lulus Ujian Akhir</b> ExcelLab dengan nilai <b>${score}%</b>.<br>Memiliki fondasi Excel yang solid: rumus, fungsi, VLOOKUP, Pivot Table, analisis data, dan pembersihan data.</p>
+  <div class="score">Nilai Ujian Akhir: ${score}%</div>
+  <div class="foot">
+    <div class="sig">Instruktur<br>ExcelLab</div>
+    <div style="align-self:flex-end;color:#5C7264">${date}</div>
+    <div class="sig">Peserta<br>${escapeHtml(name)}</div>
+  </div>
+</div>
+<script>window.onload = function(){ window.focus(); setTimeout(function(){ window.print(); }, 300); };</script>
+</body></html>`;
+  const w = window.open('', '_blank');
+  if (!w) { alert('Popup diblokir. Izinkan popup untuk mencetak sertifikat.'); return; }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
 function go(id) {
   $$('.page').forEach(p => p.classList.remove('active'));
   const el = document.getElementById('page-' + id);
@@ -178,12 +272,17 @@ function renderQuiz(key) {
         let h = '<div style="text-align:center;padding:14px 0">';
         h += '<div class="score-ring">' + score + '/' + qs.length + ' <span style="font-size:1.4rem;color:' + (pass ? 'var(--green)' : 'var(--red)') + '">(' + pct + '%)</span></div>';
         h += '<p style="margin:10px 0 18px">' + (pass ? '🎉 <b>Lulus!</b> Nilai terbaikmu untuk bagian ini: <b>' + (prog.quiz[key]) + '%</b>' : '💪 Belum lulus (batas 70%). Baca ulang materinya, lalu coba lagi.') + '</p>';
+        if (key === 'exam' && pass) {
+          h += '<button class="btn btn-primary" id="qcert-' + key + '" style="margin-right:8px">🖨️ Cetak Sertifikat</button>';
+        }
         h += '<button class="btn btn-primary" id="qretry-' + key + '">🔁 Ulangi Kuis</button></div>';
         body.innerHTML = h;
         progTag.textContent = 'Selesai';
         document.getElementById('qretry-' + key).addEventListener('click', () => {
           idx = 0; score = 0; show();
         });
+        const certBtn = document.getElementById('qcert-' + key);
+        if (certBtn) certBtn.addEventListener('click', () => printCertificate(prog.quiz[key] || pct));
       }
     });
   }
